@@ -47,6 +47,7 @@ func GetTemplateFuncMap(language string, data *GlobalData) template.FuncMap {
 		"makeWS":       makeWorkSlice,
 		"appendWS":     appendWorkSlice,
 		"yearsOfWorks": yearsOfWorks,
+		"tnindent":     tnindent,
 	}
 }
 
@@ -316,4 +317,9 @@ func makeWorkSlice() []WorkOneLang {
 func appendWorkSlice(toAppend WorkOneLang, ws []WorkOneLang) []WorkOneLang {
 	new := append(ws, toAppend)
 	return new
+}
+
+func tnindent(tabs int, s string) string {
+	pad := strings.Repeat("\t", tabs)
+	return "\n" + pad + strings.ReplaceAll(s, "\n", "\n"+pad)
 }

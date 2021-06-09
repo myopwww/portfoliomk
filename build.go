@@ -2,8 +2,8 @@ package ortfomk
 
 import (
 	"fmt"
-	"io/ioutil"
 	"io/fs"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"

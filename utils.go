@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strings"
 	"time"
+	"testing"
 
 	"github.com/relvacode/iso8601"
 )
@@ -76,4 +77,40 @@ func printfln(text string, a ...interface{}) {
 
 func printerr(explanation string, err error) {
 	printfln(explanation+": %s", err)
+}
+
+// 
+// Testing utilities (only used in *_test.go)
+//
+
+type testData struct {
+	have interface{}
+	want interface{}
+}
+
+type test struct {
+	testData
+
+	*testing.T
+}
+
+func (td test) Do(iter int) {
+	if td.have != td.want {
+		td.Errorf("failed test data #%d:\n\twant: %v\n\thave: %v", iter, td.want, td.have)
+	}
+}
+
+func runTestTable(t *testing.T, tests []testData) {
+	for i, testData := range tests {
+		test{testData, t}.Do(i)
+	}
+}
+
+func assertPanic(t *testing.T, f func()) {
+	defer func() {
+		if recover() == nil {
+			t.Errorf("did not panic")
+		}
+	}()
+	f()
 }

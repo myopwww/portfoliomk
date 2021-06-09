@@ -1,4 +1,5 @@
 build:
+	go fmt
 	go mod tidy
 	cd cmd/ortfomk; go build
 
